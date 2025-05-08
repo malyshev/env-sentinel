@@ -1,0 +1,27 @@
+{
+  "git": {
+    "tagName": "${version}",
+    "requireCleanWorkingDir": true,
+    "commitMessage": "chore: release ${version}",
+    "tagAnnotation": "Release ${version}",
+    "push": true
+  },
+  "github": {
+    "release": true,
+    "tokenRef": "GITHUB_TOKEN"
+  },
+  "npm": {
+    "publish": true,
+    "access": "public"
+  },
+  "hooks": {
+    "before:init": [
+      "npm run test",
+      "npm run build"
+    ],
+    "after:bump": [
+      "npx auto-changelog --commit-limit false -p --ignore-commit-pattern '^(Merge pull request|Bump|chore\\(deps\\))'",
+      "git add CHANGELOG.md"
+    ]
+  }
+}
