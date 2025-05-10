@@ -15,7 +15,7 @@ Whether you're working solo or managing a team, `env-sentinel` brings confidence
 
 ## Features
 
-- **Simple schema format** (e.g. `VAR_NAME=required:number`)
+- **Simple schema format** (e.g. `VAR_NAME=required|number`)
 - **Smart type detection** when generating from `.env`
 - **Zero dependencies**
 - CLI-ready: Use in local dev or pipelines

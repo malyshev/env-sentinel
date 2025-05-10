@@ -1,8 +1,8 @@
-import { log } from './log.js';
+import { log } from './../log.js';
 import { resolve } from 'node:path';
 import { existsSync, writeFileSync } from 'node:fs';
-import { DEFAULT_SCHEMA, DEFAULT_SCHEMA_FILE_NAME } from './constants.js';
-import { generateSchemaFromEnv } from './generate-schema-from-env.js';
+import { DEFAULT_SCHEMA, DEFAULT_SCHEMA_FILE_NAME } from './../constants.js';
+import { generateSchemaFromEnv } from './../generators/index.js';
 
 export function handleInit(args: string[]): void {
     const targetPath = resolve(process.cwd(), DEFAULT_SCHEMA_FILE_NAME);
