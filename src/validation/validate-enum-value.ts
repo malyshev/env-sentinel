@@ -1,4 +1,4 @@
-import { ValidationResult } from '../constants.js';
+import { ValidationResult } from '../types.js';
 
 export function validateEnumValue(key: string, value: string, args: string[]): ValidationResult {
     const allowedValues: string[] = args;

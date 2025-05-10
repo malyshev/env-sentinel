@@ -1,4 +1,4 @@
-import { ParsedRule } from '../constants.js';
+import { ParsedRule } from '../types.js';
 
 export function parseRuleString(ruleStr: string): ParsedRule[] {
     const parts: string[] = ruleStr

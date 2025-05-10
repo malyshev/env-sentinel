@@ -3,14 +3,10 @@ import fs, { readFileSync } from 'node:fs';
 import process from 'node:process';
 import { parseEnvContent, parseSchemaContent } from './../parsers/index.js';
 import { validateEnv } from './../validate-env.js';
-import { DEFAULT_SCHEMA_FILE_NAME } from './../constants.js';
 
-export function handleValidate(args: string[]) {
+export function handleValidate(envFilePath: string, schemaFilePath: string) {
     let envVars: Record<string, string>;
     let schemaVars: Record<string, string>;
-
-    const envFilePath = args.includes('--env-file') ? args[args.indexOf('--env-file') + 1] : '.env';
-    const schemaFilePath = args.includes('--schema') ? args[args.indexOf('--schema') + 1] : DEFAULT_SCHEMA_FILE_NAME;
 
     if (!fs.existsSync(envFilePath)) {
         log.error(`.env file not found: ${envFilePath}`);

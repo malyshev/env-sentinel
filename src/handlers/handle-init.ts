@@ -4,12 +4,8 @@ import { existsSync, writeFileSync } from 'node:fs';
 import { DEFAULT_SCHEMA, DEFAULT_SCHEMA_FILE_NAME } from './../constants.js';
 import { generateSchemaFromEnv } from './../generators/index.js';
 
-export function handleInit(args: string[]): void {
+export function handleInit(envFilePath: string, forceRecreate: boolean = false): void {
     const targetPath = resolve(process.cwd(), DEFAULT_SCHEMA_FILE_NAME);
-    const forceRecreate = args.includes('--force');
-    const envFileArgIndex = args.indexOf('--env-file');
-
-    const envPath = envFileArgIndex !== -1 ? args[envFileArgIndex + 1] : '.env';
 
     if (existsSync(targetPath) && !forceRecreate) {
         log.warn(`Project already initialized — ${DEFAULT_SCHEMA_FILE_NAME} file already exists.`);
@@ -19,12 +15,12 @@ export function handleInit(args: string[]): void {
 
     let schema: string;
 
-    if (existsSync(envPath)) {
-        schema = generateSchemaFromEnv(envPath);
-        log.success(`Schema inferred from ${envPath}`);
+    if (existsSync(envFilePath)) {
+        schema = generateSchemaFromEnv(envFilePath);
+        log.success(`Schema inferred from ${envFilePath}`);
     } else {
         schema = DEFAULT_SCHEMA;
-        log.warn(`${envPath} not found, using default template.`);
+        log.warn(`${envFilePath} not found, using default template.`);
     }
 
     writeFileSync(targetPath, schema);

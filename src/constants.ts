@@ -10,17 +10,3 @@ DB_USER=required
 DB_PASS=required|secure|min:8
 NODE_ENV=optional|enum:development,production,test
 `;
-
-export type SchemaEntry = {
-    key: string;
-    rule: string;
-};
-
-export type ParsedRule = {
-    name: string;
-    args: string[];
-};
-
-export type ValidationResult = string | true;
-
-export type ValidatorFn = (key: string, value: string, args: string[]) => ValidationResult;

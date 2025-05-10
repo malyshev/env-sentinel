@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { inferType } from './infer-type.js';
-import { SchemaEntry } from './../constants.js';
+import { SchemaEntry } from '../types.js';
 
 export function generateSchemaFromEnv(envPath: string): string {
     if (!existsSync(envPath)) {
