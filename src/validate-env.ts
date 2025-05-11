@@ -1,6 +1,6 @@
 import { log } from './log.js';
 import { getValidator, parseRuleString } from './validation/index.js';
-import { ParsedRule, ValidationResult, ValidatorFn } from './constants.js';
+import { ParsedRule, ValidationResult, ValidatorFn } from './types.js';
 
 export function validateEnv(env: Record<string, string>, schema: Record<string, string>): boolean {
     let isValid = true;

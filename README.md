@@ -2,6 +2,7 @@
 
 <p align="center">
 <a href="https://github.com/malyshev/env-sentinel/actions"><img src="https://github.com/malyshev/env-sentinel/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://codecov.io/gh/malyshev/env-sentinel"><img src="https://img.shields.io/codecov/c/github/malyshev/env-sentinel" alt="Coverage Status"></a>
 <a href="https://www.npmjs.com/package/env-sentinel"><img src="https://img.shields.io/npm/dw/env-sentinel" alt="Total Downloads"></a>
 <a href="https://www.npmjs.com/package/env-sentinel"><img src="https://img.shields.io/npm/v/env-sentinel" alt="Latest Stable Version"></a>
 <a href="https://www.npmjs.com/package/env-sentinel"><img src="https://img.shields.io/npm/l/env-sentinel" alt="License"></a>
