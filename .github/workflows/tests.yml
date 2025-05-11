@@ -1,6 +1,11 @@
-name: check-pr
+name: tests
 
 on:
+  push:
+    branches:
+      - master
+      - develop
+      - '*.x'
   pull_request:
     types: [ opened, synchronize, reopened ]
 
@@ -9,7 +14,7 @@ permissions:
   packages: read
 
 jobs:
-  check-pr:
+  tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
