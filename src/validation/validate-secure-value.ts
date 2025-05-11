@@ -1,4 +1,4 @@
-import { ValidationResult } from '../constants.js';
+import { ValidationResult } from '../types.js';
 
 export function validateSecureValue(key: string, value: string): ValidationResult {
     const minLength = 8;

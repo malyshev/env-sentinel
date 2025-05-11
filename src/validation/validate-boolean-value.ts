@@ -1,4 +1,4 @@
-import { ValidationResult } from '../constants.js';
+import { ValidationResult } from '../types.js';
 
 export function validateBooleanValue(key: string, value: string): ValidationResult {
     const lowerValue: string = value.toLowerCase();

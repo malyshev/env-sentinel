@@ -1,4 +1,4 @@
-import { ValidationResult } from '../constants.js';
+import { ValidationResult } from '../types.js';
 
 export function validateNumber(key: string, value: string): ValidationResult {
     const errorMessage: string = `Invalid number for ${key}`;

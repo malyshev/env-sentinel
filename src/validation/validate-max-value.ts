@@ -1,4 +1,4 @@
-import { ValidationResult } from '../constants.js';
+import { ValidationResult } from '../types.js';
 
 export function validateMaxValue(key: string, value: string, args: string[]): ValidationResult {
     const max: number = Number(args[0]);
