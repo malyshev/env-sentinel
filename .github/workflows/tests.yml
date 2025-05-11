@@ -31,8 +31,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm run test
+      - name: Run tests with coverage
+        run: npm run test:cov
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
