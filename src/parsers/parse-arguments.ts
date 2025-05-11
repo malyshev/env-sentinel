@@ -24,10 +24,10 @@ export function parseArguments<T extends { command?: string }>(argv: string[], e
             argumentName = arg.replace(/^--?/, '');
             const positionalArgument = args[index + 1];
 
-            if ((positionalArgument ?? '').startsWith('-')) {
-                argumentValue = true;
-            } else {
+            if (positionalArgument && !positionalArgument.startsWith('-')) {
                 argumentValue = positionalArgument;
+            } else {
+                argumentValue = true;
             }
         }
 

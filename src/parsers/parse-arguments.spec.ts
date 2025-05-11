@@ -60,7 +60,7 @@ describe('parseArguments', () => {
     });
 
     it('does not override with undefined', () => {
-        const argv = ['node', 'script.js', '--file'];
+        const argv = ['node', 'script.js'];
         const expectedDefaults: ExpectedArguments = {
             command: 'run',
             file: 'main.ts',

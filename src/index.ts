@@ -5,18 +5,16 @@ import { DEFAULT_SCHEMA_FILE_NAME } from './constants.js';
 import { ExpectedArguments } from './types.js';
 
 export function run(): void {
-    const { command, file, schema } = parseArguments<ExpectedArguments>(process.argv, {
+    const { command, file, schema, force } = parseArguments<ExpectedArguments>(process.argv, {
         command: 'check',
         file: '.env',
         schema: DEFAULT_SCHEMA_FILE_NAME,
         force: false,
     });
 
-    console.log(command, file, schema);
-
     switch (command) {
         case 'init':
-            handleInit(file!);
+            handleInit(file!, force);
             break;
         case 'check':
         case undefined:
@@ -24,7 +22,7 @@ export function run(): void {
             break;
         default:
             console.log(`Unknown command: ${command}`);
-            console.log(`Usage: env-sentinel [init|check] [--force] [--env-file FILE] [--schema FILE]`);
+            console.log(`Usage: env-sentinel [init|check] [--force] [--file FILE] [--schema FILE]`);
             process.exit(1);
     }
 }
