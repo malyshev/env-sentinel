@@ -71,4 +71,25 @@ FOO=required
 
         expect(() => generateSchemaFromEnv('nonexistent.env')).toThrow(/File not found: nonexistent\.env/);
     });
+
+    it('should generate schema for referenced variables', () => {
+        mockedExistsSync.mockReturnValue(true);
+        mockedReadFileSync.mockReturnValue(`
+# Comment line
+PORT=3000
+NEW_PORT=$PORT
+`);
+
+        mockedInferType.mockImplementation((value: string) => {
+            if (value === '3000') return 'number';
+            return '';
+        });
+
+        const result = generateSchemaFromEnv('/path/to/.env');
+
+        expect(result).toBe(`# Generated from /path/to/.env
+PORT=required|number
+NEW_PORT=required|number
+`);
+    });
 });
