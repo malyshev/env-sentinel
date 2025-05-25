@@ -14,4 +14,4 @@ registerValidator('secure', validateSecureValue);
 registerValidator('enum', validateEnumValue);
 
 export * from './parse-rule-string.js';
-export { registerValidator, getValidator, validateNumber };
+export { registerValidator, getValidator };

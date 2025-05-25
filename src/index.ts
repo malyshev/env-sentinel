@@ -3,6 +3,7 @@ import { handleInit, handleValidate } from './handlers/index.js';
 import { parseArguments } from './parsers/parse-arguments.js';
 import { DEFAULT_SCHEMA_FILE_NAME } from './constants.js';
 import { ExpectedArguments } from './types.js';
+import { handleLint } from './handlers/handle-lint.js';
 
 export function run(): void {
     const { command, file, schema, force } = parseArguments<ExpectedArguments>(process.argv, {
@@ -15,6 +16,9 @@ export function run(): void {
     switch (command) {
         case 'init':
             handleInit(file!, force);
+            break;
+        case 'lint':
+            handleLint(file!);
             break;
         case 'check':
         case undefined:
