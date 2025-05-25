@@ -1,24 +1,15 @@
-import { parseEnvFile } from './parse-env-file.js';
-import { readFileSync } from 'node:fs';
-
-jest.mock('node:fs', () => ({
-    readFileSync: jest.fn(),
-}));
+import { parseEnvContent } from './parse-env-content.js';
 
 describe('parseEnvFile', () => {
-    const mockedReadFileSync = readFileSync as jest.MockedFunction<typeof readFileSync>;
-
     afterEach(() => {
         jest.clearAllMocks();
     });
 
     it('parses basic key-value pairs', () => {
-        mockedReadFileSync.mockReturnValue(`
+        const result = parseEnvContent(`
             FOO=bar
             BAZ=qux
         `);
-
-        const result = parseEnvFile('dummy.env');
 
         expect(result).toEqual({
             FOO: 'bar',
@@ -27,15 +18,13 @@ describe('parseEnvFile', () => {
     });
 
     it('ignores comments and empty lines', () => {
-        mockedReadFileSync.mockReturnValue(`
+        const result = parseEnvContent(`
             # This is a comment
             FOO=bar
 
             # Another comment
             BAZ=qux
         `);
-
-        const result = parseEnvFile('dummy.env');
 
         expect(result).toEqual({
             FOO: 'bar',
@@ -44,11 +33,9 @@ describe('parseEnvFile', () => {
     });
 
     it('joins multiple equals in value', () => {
-        mockedReadFileSync.mockReturnValue(`
+        const result = parseEnvContent(`
             PASSWORD=p@ss=123=xyz
         `);
-
-        const result = parseEnvFile('dummy.env');
 
         expect(result).toEqual({
             PASSWORD: 'p@ss=123=xyz',
@@ -56,11 +43,9 @@ describe('parseEnvFile', () => {
     });
 
     it('trims whitespace around keys and values', () => {
-        mockedReadFileSync.mockReturnValue(`
+        const result = parseEnvContent(`
             FOO =   bar
         `);
-
-        const result = parseEnvFile('dummy.env');
 
         expect(result).toEqual({
             FOO: 'bar',
@@ -68,12 +53,10 @@ describe('parseEnvFile', () => {
     });
 
     it('strips surrounding quotes', () => {
-        mockedReadFileSync.mockReturnValue(`
+        const result = parseEnvContent(`
             SINGLE='hello world'
             DOUBLE="hello world"
         `);
-
-        const result = parseEnvFile('dummy.env');
 
         expect(result).toEqual({
             SINGLE: 'hello world',
@@ -82,25 +65,48 @@ describe('parseEnvFile', () => {
     });
 
     it('ignores lines with empty keys', () => {
-        mockedReadFileSync.mockReturnValue(`
+        const result = parseEnvContent(`
             =value
             FOO=bar
         `);
-
-        const result = parseEnvFile('dummy.env');
 
         expect(result).toEqual({
             FOO: 'bar',
         });
     });
 
-    it('throws a descriptive error when file read fails', () => {
-        mockedReadFileSync.mockImplementation(() => {
-            throw new Error('File not found');
-        });
+    it('expands values referenced with ${VAR}', () => {
+        const result = parseEnvContent("FOO=bar\nBAR=${FOO}");
 
-        expect(() => parseEnvFile('nonexistent.env')).toThrow(
-            /Failed to read env file at nonexistent\.env: File not found/,
-        );
+        expect(result).toEqual({
+            FOO: 'bar',
+            BAR: 'bar'
+        });
+    });
+
+    it('expands values referenced with {$VAR}', () => {
+        const result = parseEnvContent("FOO=bar\nBAR={$FOO}");
+
+        expect(result).toEqual({
+            FOO: 'bar',
+            BAR: 'bar'
+        });
+    });
+
+    it('expands values referenced with $VAR', () => {
+        const result = parseEnvContent("FOO=bar\nBAR=$FOO");
+
+        expect(result).toEqual({
+            FOO: 'bar',
+            BAR: 'bar'
+        });
+    });
+
+    it('throws an error if a referenced variable does not exist', () => {
+        expect(() => parseEnvContent("FOO=bar\nBAR=$BAZ")).toThrow(`Referenced key "BAZ" not found in the env.`)
+    });
+
+    it('throws an error for self referenced variables', () => {
+        expect(() => parseEnvContent("FOO=$FOO")).toThrow(`Referenced key "FOO" not found in the env.`)
     });
 });

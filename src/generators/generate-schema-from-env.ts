@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { inferType } from './infer-type.js';
-import { SchemaEntry } from './constants.js';
+import { SchemaEntry } from '../types.js';
+import { parseEnvContent } from '../parsers/parse-env-content.js';
 
 export function generateSchemaFromEnv(envPath: string): string {
     if (!existsSync(envPath)) {
@@ -8,22 +9,14 @@ export function generateSchemaFromEnv(envPath: string): string {
     }
 
     const raw: string = readFileSync(envPath, 'utf-8');
-    const lines: string[] = raw
-        .split(/\r?\n/)
-        .filter((line: string): boolean | '' => line.trim() && !line.startsWith('#'));
+    const env = parseEnvContent(raw);
 
-    const schemaEntries: SchemaEntry[] = lines.flatMap((line: string): SchemaEntry[] => {
-        const [keyRaw, ...valParts] = line.split('=');
-        const key: string = keyRaw.trim();
-        const value: string = valParts.join('=').trim();
-
-        if (!key || !value) return [];
-
+    const schemaEntries: SchemaEntry[] = Object.entries(env).map(([key, value]): SchemaEntry => {
         const type: 'number' | 'boolean' | '' = inferType(value);
         const rule: string = type ? `required|${type}` : 'required';
 
-        return [{ key, rule }];
-    });
+        return { key, rule }
+    })
 
     return (
         `# Generated from ${envPath}\n` +

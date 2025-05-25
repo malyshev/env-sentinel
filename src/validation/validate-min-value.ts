@@ -1,4 +1,4 @@
-import { ValidationResult } from '../constants.js';
+import { ValidationResult } from '../types.js';
 
 export function validateMinValue(key: string, value: string, args: string[]): ValidationResult {
     const min: number = Number(args[0]);

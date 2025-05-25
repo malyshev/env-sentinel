@@ -1,5 +1,13 @@
 # env-sentinel
 
+<p align="center">
+<a href="https://github.com/malyshev/env-sentinel/actions"><img src="https://github.com/malyshev/env-sentinel/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://codecov.io/gh/malyshev/env-sentinel"><img src="https://img.shields.io/codecov/c/github/malyshev/env-sentinel" alt="Coverage Status"></a>
+<a href="https://www.npmjs.com/package/env-sentinel"><img src="https://img.shields.io/npm/dw/env-sentinel" alt="Total Downloads"></a>
+<a href="https://www.npmjs.com/package/env-sentinel"><img src="https://img.shields.io/npm/v/env-sentinel" alt="Latest Stable Version"></a>
+<a href="https://www.npmjs.com/package/env-sentinel"><img src="https://img.shields.io/npm/l/env-sentinel" alt="License"></a>
+</p>
+
 ## Intro
 
 `env-sentinel` is a lightweight CLI tool for validating `.env` files in Node.js projects using a simple, human-readable schema format.
@@ -15,7 +23,7 @@ Whether you're working solo or managing a team, `env-sentinel` brings confidence
 
 ## Features
 
-- **Simple schema format** (e.g. `VAR_NAME=required:number`)
+- **Simple schema format** (e.g. `VAR_NAME=required|number`)
 - **Smart type detection** when generating from `.env`
 - **Zero dependencies**
 - CLI-ready: Use in local dev or pipelines
@@ -123,4 +131,4 @@ npx env-sentinel check --env-file .env.production --schema config/prod.schema
 
 ## License
 
-MIT — Free to use, modify, and contribute!
+[MIT license](https://opensource.org/licenses/MIT) — Free to use, modify, and contribute!

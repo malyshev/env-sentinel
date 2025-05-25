@@ -1,4 +1,4 @@
-import { ValidatorFn } from '../constants.js';
+import { ValidatorFn } from '../types.js';
 
 const validatorRegistry = new Map<string, ValidatorFn>();
 

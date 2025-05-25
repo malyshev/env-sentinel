@@ -1,5 +1,5 @@
 import { parseRuleString } from './parse-rule-string';
-import { ParsedRule } from '../constants.js';
+import { ParsedRule } from '../types.js';
 
 describe('parseRuleString', () => {
     it('parses single rule with no arguments', () => {
