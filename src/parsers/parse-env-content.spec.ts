@@ -74,4 +74,39 @@ describe('parseEnvFile', () => {
             FOO: 'bar',
         });
     });
+
+    it('expands values referenced with ${VAR}', () => {
+        const result = parseEnvContent("FOO=bar\nBAR=${FOO}");
+
+        expect(result).toEqual({
+            FOO: 'bar',
+            BAR: 'bar'
+        });
+    });
+
+    it('expands values referenced with {$VAR}', () => {
+        const result = parseEnvContent("FOO=bar\nBAR={$FOO}");
+
+        expect(result).toEqual({
+            FOO: 'bar',
+            BAR: 'bar'
+        });
+    });
+
+    it('expands values referenced with $VAR', () => {
+        const result = parseEnvContent("FOO=bar\nBAR=$FOO");
+
+        expect(result).toEqual({
+            FOO: 'bar',
+            BAR: 'bar'
+        });
+    });
+
+    it('throws an error if a referenced variable does not exist', () => {
+        expect(() => parseEnvContent("FOO=bar\nBAR=$BAZ")).toThrow(`Referenced key "BAZ" not found in the env.`)
+    });
+
+    it('throws an error for self referenced variables', () => {
+        expect(() => parseEnvContent("FOO=$FOO")).toThrow(`Referenced key "FOO" not found in the env.`)
+    });
 });
