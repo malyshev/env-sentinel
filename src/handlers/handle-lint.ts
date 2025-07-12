@@ -25,7 +25,7 @@ export function handleLint(envFilePath: string) {
                 break;
             case 'error':
             default:
-                log.warn(message);
+                log.error(message);
                 break;
         }
     });

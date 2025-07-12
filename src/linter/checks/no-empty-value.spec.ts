@@ -6,33 +6,33 @@ describe('noEmptyValueCheck', () => {
         expect(noEmptyValueCheck(2, 'KEY="value"')).toBeUndefined();
     });
 
-    it('should warn on empty value', () => {
+    it('should notice on empty value', () => {
         const result = noEmptyValueCheck(3, 'EMPTY=');
         expect(result).toEqual({
             line: 3,
             issue: 'Variable "EMPTY" has an empty value',
             content: 'EMPTY=',
-            severity: 'warning',
+            severity: 'notice',
         });
     });
 
-    it('should warn on value with only whitespace', () => {
+    it('should notice on value with only whitespace', () => {
         const result = noEmptyValueCheck(4, 'FOO=    ');
         expect(result).toEqual({
             line: 4,
             issue: 'Variable "FOO" has an empty value',
             content: 'FOO=    ',
-            severity: 'warning',
+            severity: 'notice',
         });
     });
 
-    it('should warn on value that is a comment', () => {
+    it('should notice on value that is a comment', () => {
         const result = noEmptyValueCheck(5, 'FOO= # some comment');
         expect(result).toEqual({
             line: 5,
             issue: 'Variable "FOO" has an empty value',
             content: 'FOO= # some comment',
-            severity: 'warning',
+            severity: 'notice',
         });
     });
 

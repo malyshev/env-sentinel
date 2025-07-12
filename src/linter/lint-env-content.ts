@@ -15,6 +15,11 @@ export function lintEnvContent(envContent: string): LintResultWithRule[] {
                 return;
             }
 
+            // Skip a comment line.
+            if (rawLine.trim().startsWith('#')) {
+                return;
+            }
+
             const checkResult: LintResult | undefined = check.run(lineNumber, rawLine);
             if (checkResult !== undefined) {
                 issues.push({ ...checkResult, rule: check.name });

@@ -13,6 +13,12 @@ import { noQuotedKeyCheck } from './no-quoted-key.check.js';
 import { noSpaceBeforeEqualCheck } from './no-space-before-equal.check.js';
 import { noSpaceAfterEqualCheck } from './no-space-after-equal.check.js';
 import { noInvalidReferenceSyntaxCheck } from './no-invalid-reference-syntax.check.js';
+import { noUnquotedMultilineValueCheck } from './no-unquoted-multiline-value.check.js';
+import { noUnescapedShellCharsCheck } from './no-unescaped-shell-chars.check.js';
+import { noEmptyQuotesCheck } from './no-empty-quotes.check.js';
+import { noUnquotedYAMLBooleanLiteralCheck } from './no-unquoted-yaml-boolean-literal.check.js';
+import { noDuplicateReferenceCheck } from './no-duplicate-reference.check.js';
+import { noCommaSeparatedValueInScalarCheck } from './no-comma-separated-value-in-scalar.check.js';
 
 const lintChecks: LintCheck[] = [
     {
@@ -71,6 +77,30 @@ const lintChecks: LintCheck[] = [
         name: 'no-invalid-reference-syntax',
         run: noInvalidReferenceSyntaxCheck,
     },
+    {
+        name: 'no-unquoted-multiline-value',
+        run: noUnquotedMultilineValueCheck,
+    },
+    {
+        name: 'no-unescaped-shell-chars',
+        run: noUnescapedShellCharsCheck,
+    },
+    {
+        name: 'no-yaml-boolean-literal',
+        run: noUnquotedYAMLBooleanLiteralCheck,
+    },
+    {
+        name: 'no-empty-quotes',
+        run: noEmptyQuotesCheck,
+    },
+    {
+        name: 'no-duplicate-reference',
+        run: noDuplicateReferenceCheck,
+    },
+    {
+        name: 'no-comma-separated-value-in-scalar',
+        run: noCommaSeparatedValueInScalarCheck,
+    },
 ];
 
 export {
@@ -89,4 +119,10 @@ export {
     noSpaceBeforeEqualCheck,
     noSpaceAfterEqualCheck,
     noInvalidReferenceSyntaxCheck,
+    noUnquotedMultilineValueCheck,
+    noUnescapedShellCharsCheck,
+    noUnquotedYAMLBooleanLiteralCheck,
+    noEmptyQuotesCheck,
+    noDuplicateReferenceCheck,
+    noCommaSeparatedValueInScalarCheck,
 };

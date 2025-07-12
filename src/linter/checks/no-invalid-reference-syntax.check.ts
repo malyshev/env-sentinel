@@ -3,8 +3,10 @@ import type { LintResult } from '../../types.js';
 const VALID_NAME_REGEX = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
 export function noInvalidReferenceSyntaxCheck(lineNumber: number, lineContent: string): LintResult | undefined {
-    // Match $VAR or ${...}, even if malformed — so we can lint them
-    const regex = /(?<!\\)(\$\{([^}]*)\}|\$[^\s{}]+)/g;
+    // regex: match $VAR or ${VAR}, but skip \$, $$, and more than two $
+    // - match non-escaped, single $
+    // - not immediately followed by another $
+    const regex = /(?<!\\)(\$\{([^}]*)}|\$(?!\$)[a-zA-Z_][a-zA-Z0-9_]*\b)/g;
 
     let match: RegExpExecArray | null;
     while ((match = regex.exec(lineContent)) !== null) {
