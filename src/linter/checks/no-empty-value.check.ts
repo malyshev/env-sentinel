@@ -17,7 +17,7 @@ export function noEmptyValueCheck(lineNumber: number, lineContent: string): Lint
             line: lineNumber,
             issue: `Variable "${key}" has an empty value`,
             content: lineContent,
-            severity: 'warning',
+            severity: 'notice',
         };
     }
 

@@ -16,10 +16,17 @@ export function handleLint(envFilePath: string) {
     result.forEach((lintResult: LintResultWithRule): void => {
         const message: string = `${envFilePath}:${lintResult.line} [${lintResult.severity}] ${lintResult.rule} → ${lintResult.issue}`;
 
-        if (lintResult.severity === 'warning') {
-            log.warn(message);
-        } else {
-            log.error(message);
+        switch (lintResult.severity) {
+            case 'notice':
+                log.notice(message);
+                break;
+            case 'warning':
+                log.warn(message);
+                break;
+            case 'error':
+            default:
+                log.warn(message);
+                break;
         }
     });
 }

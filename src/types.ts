@@ -14,7 +14,7 @@ export type CommandName = 'init' | 'check' | 'lint' | undefined;
 
 export type ValidationResult = string | true;
 
-export type LintResult = { line: number; issue: string; content?: string; severity?: 'warning' | 'error' };
+export type LintResult = { line: number; issue: string; content?: string; severity?: 'warning' | 'error' | 'notice' };
 export type LintResultWithRule = LintResult & { rule: string };
 
 export type ValidatorFn = (key: string, value: string, args: string[]) => ValidationResult;

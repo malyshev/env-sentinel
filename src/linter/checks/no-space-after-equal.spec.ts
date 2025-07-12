@@ -46,4 +46,9 @@ describe('noSpaceAfterEqualCheck', () => {
         const result = noSpaceAfterEqualCheck(6, 'KEYVALUE');
         expect(result).toBeUndefined();
     });
+
+    it('should not return anything when after = is a comment', () => {
+        const result = noSpaceAfterEqualCheck(7, 'KEY=   #comment');
+        expect(result).toBeUndefined();
+    });
 });
