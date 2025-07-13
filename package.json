@@ -1,6 +1,6 @@
 {
   "name": "env-sentinel",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Zero-dependency tool that auto-validates .env files against schema.env, with optional fallback and secure warnings.",
   "keywords": [
     "env",
