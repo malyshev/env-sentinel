@@ -169,6 +169,20 @@ npx env-sentinel lint --file .env.production
 - .env.template generator from schema
 - Dry run & suggestion mode
 
+## 💖 Sponsors
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/dartcdev">
+        <img src="https://avatars.githubusercontent.com/dartcdev?v=4" width="64px;" alt=""/>
+        <br />
+        <sub><b>@dartcdev</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## License
 
 [MIT license](https://opensource.org/licenses/MIT) — Free to use, modify, and contribute!
