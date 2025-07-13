@@ -8,36 +8,68 @@
 <a href="https://www.npmjs.com/package/env-sentinel"><img src="https://img.shields.io/npm/l/env-sentinel" alt="License"></a>
 </p>
 
-## Intro
+## 🔎 Intro
 
-`env-sentinel` is a lightweight CLI tool for validating `.env` files in Node.js projects using a simple, human-readable schema format.
+**env-sentinel** is a lightweight, zero-dependency CLI tool for analyzing `.env` files in Node.js projects — offering both schema-based **validation** and powerful **linting** to ensure your environment variables are correct, consistent, and production-safe.
 
-It helps developers **prevent runtime misconfigurations**, especially in multi-environment projects or CI/CD pipelines. With zero dependencies and blazing-fast execution, `env-sentinel` offers a modern alternative to bloated validators or manual `.env.example` guessing games.
+In addition to verifying variable types and required keys, **env-sentinel** can detect subtle and hard-to-spot issues such as malformed keys, unsafe characters, unescaped shell tokens, duplicate references, invalid syntax, and YAML pitfalls — problems that typical schema validation can’t catch.
 
-Whether you're working solo or managing a team, `env-sentinel` brings confidence, clarity, and automation to your environment variable workflows — without needing to write a line of custom validation logic.
+With fast execution and a human-readable schema format, **env-sentinel** eliminates the guesswork of `.env.example` files and bloated config validators — giving you clear, actionable feedback without writing custom validation logic.
 
-- **Zero-dependency .env file checker** for Node.js projects.  
-- Validate your environment variables with a simple schema.  
-- Auto-generate schema from existing `.env` files with type inference.  
-- Perfect for CI/CD pipelines, local dev, and safer config handling.
+### ✨ Key Features
 
-## Features
+- ✅ Lint .env files to catch formatting issues, unsafe syntax, and common misconfigurations
+- ✅ Validate environment variables against a defined schema
+- ✅ Simple schema format (e.g. VAR_NAME=required|number)
+- ✅ Smart type detection when generating from .env
+- ✅ Auto-generate schema with type inference from existing .env files with inferred
+- ✅ Zero dependencies and extremely fast
+- ✅ Ideal for local development, CI/CD, and team workflows
+- ✅ Fast fail with clear, colorized output
 
-- **Simple schema format** (e.g. `VAR_NAME=required|number`)
-- **Smart type detection** when generating from `.env`
-- **Zero dependencies**
-- CLI-ready: Use in local dev or pipelines
-- Initializes `.env-sentinel` with inferred rules
-- Fast fail with clear, colorized output
+## 📦 Installation
 
-## Installation
+The easiest way to run `env-sentinel` is with `npx` (no installation required):
 
-```bash
-npx env-sentinel         # no install needed (recommended)
+```shell
+npx env-sentinel lint --file .env
 ```
-or install globally/local if preferred:
-```bash
+
+Alternatively, you can install it globally or as a local project dependency:
+
+### Using npm
+
+```shell
+# Global
 npm install -g env-sentinel
+
+# Local (in your project)
+npm install --save-dev env-sentinel
+```
+
+### Using yarn
+
+```shell
+# Global
+yarn global add env-sentinel
+
+# Local
+yarn add --dev env-sentinel
+```
+
+### Using pnpm
+
+```shell
+# Global
+pnpm add -g env-sentinel
+
+# Local
+pnpm add -D env-sentinel
+```
+
+Then run it:
+```shell
+npx env-sentinel lint --file .env     # or just: env-sentinel lint
 ```
 
 ### Initialize schema file (.env-sentinel) from existing .env
@@ -95,24 +127,31 @@ npx env-sentinel
 - .env (env file)
 - .env-sentinel (schema file)
 
-### Check custom file paths
+### Validate or Lint custom files
 
-```bash
-npx env-sentinel check --env-file .env.production --schema config/prod.schema
+```shell
+# Validate .env against a schema
+npx env-sentinel validate --env-file .env.production --schema config/prod.schema
+
+# Lint .env for formatting issues
+npx env-sentinel lint --file .env.production
 ```
 
 ###  Sample Output
 
 **On success:**
 
-
 > ✅ Environment validation passed!
-
 
 **On failure:**
 
+```shell
+> 🔵 .env:101 [notice] no-empty-value → Variable "COMMENTED_OUT" has an empty value
+> 🟡 .env:102 [warning] no-unquoted-multiline-value → Unquoted multiline-looking value in "MULTILINE"
+> 🛑 .env:104 [error] no-invalid-key-delimiter → Variable name contains invalid delimiter: ":"
 > 🛑 Missing required variable: DB_HOST  
-> ⚠️ Insecure value detected: DB_PASS=1234
+> 🟡 Insecure value detected: DB_PASS=1234
+```
 
 ## Why use env-sentinel?
 

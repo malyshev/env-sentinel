@@ -1,4 +1,5 @@
-const REFERENCE_REGEX = /(?<!\\)(\$\{(?<key1>[A-Za-z_][A-Za-z0-9_]*)\}|\{\$(?<key2>[A-Za-z_][A-Za-z0-9_]*)\}|\$(?<key3>[A-Za-z_][A-Za-z0-9_]*))/
+const REFERENCE_REGEX =
+    /(?<!\\)(\$\{(?<key1>[A-Za-z_][A-Za-z0-9_]*)\}|\{\$(?<key2>[A-Za-z_][A-Za-z0-9_]*)\}|\$(?<key3>[A-Za-z_][A-Za-z0-9_]*))/;
 
 export function parseEnvContent(rawEnvContent: string): Record<string, string> {
     const env: Record<string, string> = {};

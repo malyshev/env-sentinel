@@ -4,7 +4,7 @@ import process from 'node:process';
 import { parseEnvContent, parseSchemaContent } from './../parsers/index.js';
 import { validateEnv } from './../validate-env.js';
 
-export function handleValidate(envFilePath: string, schemaFilePath: string) {
+export function handleValidate(envFilePath: string, schemaFilePath: string): void {
     let envVars: Record<string, string>;
     let schemaVars: Record<string, string>;
 
