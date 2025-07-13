@@ -14,15 +14,21 @@ export function run(): void {
     });
 
     switch (command) {
+        case 'check':
+            console.warn(
+                '⚠️  The "check" command is deprecated and will be removed in a future release. Please use "validate" instead.',
+            );
+            handleValidate(file!, schema!);
+            break;
+        case 'validate':
+            handleValidate(file!, schema!);
+            break;
         case 'init':
             handleInit(file!, force);
             break;
         case 'lint':
-            handleLint(file!);
-            break;
-        case 'check':
         case undefined:
-            handleValidate(file!, schema!);
+            handleLint(file!);
             break;
         default:
             console.log(`Unknown command: ${command}`);

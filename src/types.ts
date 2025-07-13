@@ -10,7 +10,7 @@ export type ParsedRule = {
     args: string[];
 };
 
-export type CommandName = 'init' | 'check' | 'lint' | undefined;
+export type CommandName = 'init' | 'validate' | 'check' | 'lint' | undefined;
 
 export type ValidationResult = string | true;
 
