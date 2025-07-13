@@ -1,4 +1,5 @@
-# env-sentinel
+
+<p align="center"><img src="https://raw.githubusercontent.com/malyshev/env-sentinel/refs/heads/develop/assets/env-sentinel-logo.png" width="400" alt="env-sentinel logo"></p>
 
 <p align="center">
 <a href="https://github.com/malyshev/env-sentinel/actions"><img src="https://github.com/malyshev/env-sentinel/workflows/tests/badge.svg" alt="Build Status"></a>
