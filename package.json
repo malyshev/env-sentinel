@@ -51,18 +51,18 @@
     "README.md"
   ],
   "devDependencies": {
-    "@eslint/js": "^9.26.0",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^22.15.16",
-    "eslint": "^9.26.0",
-    "globals": "^16.1.0",
-    "jest": "^29.7.0",
-    "prettier": "3.5.3",
+    "@eslint/js": "^9.31.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.13",
+    "eslint": "^9.31.0",
+    "globals": "^16.3.0",
+    "jest": "^30.0.4",
+    "prettier": "3.6.2",
     "rimraf": "^6.0.1",
-    "ts-jest": "^29.3.2",
+    "ts-jest": "^29.4.0",
     "tslib": "^2.8.1",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.32.0"
+    "typescript-eslint": "^8.36.0"
   },
   "jest": {
     "preset": "ts-jest/presets/default-esm",
