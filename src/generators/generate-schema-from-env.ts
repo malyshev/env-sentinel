@@ -15,8 +15,8 @@ export function generateSchemaFromEnv(envPath: string): string {
         const type: 'number' | 'boolean' | '' = inferType(value);
         const rule: string = type ? `required|${type}` : 'required';
 
-        return { key, rule }
-    })
+        return { key, rule };
+    });
 
     return (
         `# Generated from ${envPath}\n` +

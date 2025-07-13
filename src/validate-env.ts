@@ -2,12 +2,12 @@ import { log } from './log.js';
 import { getValidator, parseRuleString } from './validation/index.js';
 import { ParsedRule, ValidationResult, ValidatorFn } from './types.js';
 
-export function validateEnv(env: Record<string, string>, schema: Record<string, string>): boolean {
+export function validateEnv(envValues: Record<string, string>, schema: Record<string, string>): boolean {
     let isValid = true;
     for (const key in schema) {
         const rawRule: string = schema[key];
         const rules: ParsedRule[] = parseRuleString(rawRule);
-        const value: string = env[key];
+        const value: string = envValues[key];
         const ruleNames: string[] = rules.map((r) => r.name);
         const isRequired: boolean = ruleNames.includes('required');
 
