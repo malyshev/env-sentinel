@@ -24,3 +24,26 @@ export type LintCheckFn = (lineNumber: number, lineContent: string) => LintResul
 export type LintCheck = { name: string; run: LintCheckFn; skipOnEmptyOrComment?: boolean };
 
 export type ExpectedArguments = { command?: CommandName; file?: string; schema?: string; force?: boolean };
+
+// Unified result types for library integration
+export type Result = {
+    isValid: boolean;
+    issues: Issue[];
+    summary: Summary;
+};
+
+export type Issue = {
+    line?: number;
+    key?: string;
+    message: string;
+    severity: 'error' | 'warning' | 'notice';
+    rule?: string;
+    value?: string;
+};
+
+export type Summary = {
+    total: number;
+    errors: number;
+    warnings: number;
+    notices: number;
+};
