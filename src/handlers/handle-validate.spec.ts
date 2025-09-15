@@ -3,6 +3,7 @@ import { handleValidate } from './handle-validate.js';
 import { validate } from '../validate/index.js';
 import { parseEnvContent, parseSchemaContent } from '../parsers/index.js';
 import { Result } from '../types.js';
+import { existsSync, readFileSync } from 'node:fs';
 
 // Mock dependencies
 jest.mock('../utils/log.js');
@@ -17,8 +18,8 @@ const mockedLog = log as jest.Mocked<typeof log>;
 const mockedValidate = validate as jest.MockedFunction<typeof validate>;
 const mockedParseEnvContent = parseEnvContent as jest.MockedFunction<typeof parseEnvContent>;
 const mockedParseSchemaContent = parseSchemaContent as jest.MockedFunction<typeof parseSchemaContent>;
-const mockedExistsSync = jest.mocked(require('node:fs').existsSync);
-const mockedReadFileSync = jest.mocked(require('node:fs').readFileSync);
+const mockedExistsSync = jest.mocked(existsSync);
+const mockedReadFileSync = jest.mocked(readFileSync);
 
 describe('handleValidate', () => {
     beforeEach(() => {
@@ -26,7 +27,7 @@ describe('handleValidate', () => {
         mockedExistsSync.mockReturnValue(true);
         mockedReadFileSync.mockReturnValue('test content');
         mockedParseEnvContent.mockReturnValue({});
-        mockedParseSchemaContent.mockReturnValue({});
+        mockedParseSchemaContent.mockReturnValue([]);
     });
 
     it('should validate successfully when no issues', () => {

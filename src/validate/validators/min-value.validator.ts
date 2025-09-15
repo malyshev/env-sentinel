@@ -7,12 +7,16 @@ export function minValueValidator(key: string, value: string, args: string[]): V
     }
 
     const numValue = parseFloat(value);
-    if (isNaN(numValue)) {
-        return `Invalid number for ${key}`;
-    }
-
-    if (numValue < minValue) {
-        return `${key} must be >= ${minValue}`;
+    if (!isNaN(numValue) && numValue.toString() === value) {
+        // Value is a valid number - validate as numeric
+        if (numValue < minValue) {
+            return `${key} must be >= ${minValue}`;
+        }
+    } else {
+        // Value is not a valid number - validate as string length
+        if (value.length < minValue) {
+            return `${key} must be at least ${minValue} characters long`;
+        }
     }
 
     return true;

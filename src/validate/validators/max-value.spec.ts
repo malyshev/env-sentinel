@@ -17,7 +17,7 @@ describe('maxValueValidator', () => {
         expect(maxValueValidator('PORT', '3000', ['not-a-number'])).toBe('Invalid max argument for PORT');
     });
 
-    it('should return error message for invalid number value', () => {
-        expect(maxValueValidator('PORT', 'abc', ['5000'])).toBe('Invalid number for PORT');
+    it('should validate string length for non-numeric values', () => {
+        expect(maxValueValidator('PORT', 'abc', ['2'])).toBe('PORT must be at most 2 characters long');
     });
 });

@@ -6,8 +6,10 @@ import { maxValueValidator } from './validators/max-value.validator.js';
 import { booleanValueValidator } from './validators/boolean-value.validator.js';
 import { secureValueValidator } from './validators/secure-value.validator.js';
 import { enumValueValidator } from './validators/enum-value.validator.js';
+import { stringValidator } from './validators/string.validator.js';
 
 const coreValidators: [string, ValidatorFn][] = [
+    ['string', stringValidator],
     ['number', numberValidator],
     ['min', minValueValidator],
     ['max', maxValueValidator],
@@ -18,8 +20,8 @@ const coreValidators: [string, ValidatorFn][] = [
 
 export const validatorRegistry = new Registry<ValidatorFn>(coreValidators);
 
-// Export individual validators for backward compatibility
 export {
+    stringValidator,
     numberValidator,
     minValueValidator,
     maxValueValidator,

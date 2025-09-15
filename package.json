@@ -1,6 +1,6 @@
 {
   "name": "env-sentinel",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Zero-dependency tool that auto-validates .env files against schema.env, with optional fallback and secure warnings.",
   "keywords": [
     "env",
@@ -41,7 +41,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:perf": "jest --testPathPatterns=tests/performance",
+    "test:perf": "jest --config jest.perf.config.js tests/performance",
     "benchmark": "node scripts/benchmark-cli.js",
     "benchmark:all": "npm run test:perf && npm run benchmark",
     "analyze": "node scripts/analyze-bundle.js",
@@ -94,6 +94,9 @@
     "testMatch": [
       "<rootDir>/**/*.spec.ts",
       "tests/**/*.spec.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "tests/performance"
     ],
     "collectCoverageFrom": [
       "src/**/*.(t|j)s"
