@@ -1,5 +1,4 @@
-const REFERENCE_REGEX =
-    /(?<!\\)(\$\{(?<key1>[A-Za-z_][A-Za-z0-9_]*)\}|\{\$(?<key2>[A-Za-z_][A-Za-z0-9_]*)\}|\$(?<key3>[A-Za-z_][A-Za-z0-9_]*)(?![A-Za-z0-9_]*\$))/;
+import { REFERENCE_REGEX, getReferencedKey } from '../utils/reference-utils.js';
 
 export function parseEnvContent(rawEnvContent: string): Record<string, string> {
     const env: Record<string, string> = {};
@@ -43,8 +42,3 @@ export function parseEnvContent(rawEnvContent: string): Record<string, string> {
     return env;
 }
 
-//get the referenced key from the capture groups
-function getReferencedKey(key: string): string {
-    const { groups } = REFERENCE_REGEX.exec(key)!;
-    return groups!.key1 || groups!.key2 || groups!.key3 || key;
-}

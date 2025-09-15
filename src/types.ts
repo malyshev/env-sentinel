@@ -3,6 +3,15 @@ export type nil = undefined | unknown | null;
 export type SchemaEntry = {
     key: string;
     rule: string;
+    metadata?: DocumentationMetadata;
+};
+
+export type DocumentationMetadata = {
+    description?: string;
+    example?: string;
+    default?: string;
+    section?: string;
+    sectionDescription?: string;
 };
 
 export type ParsedRule = {

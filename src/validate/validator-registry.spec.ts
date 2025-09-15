@@ -51,7 +51,7 @@ describe('validatorRegistry', () => {
 
     describe('custom validators', () => {
         it('should allow registering custom validators', () => {
-            const customValidator: ValidatorFn = (key: string, value: string, _args: string[]) => {
+            const customValidator: ValidatorFn = (key: string, value: string) => {
                 if (value.includes('CUSTOM_TEST')) {
                     return `Custom validator failed for ${key}`;
                 }

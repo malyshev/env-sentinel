@@ -9,7 +9,10 @@ export function handleValidate(envFilePath: string, schemaFilePath: string): voi
     const rawSchemaContent = readSchemaFile(schemaFilePath);
 
     const envVars = parseEnvContent(rawEnvContent);
-    const schemaVars = parseSchemaContent(rawSchemaContent);
+    const schemaEntries = parseSchemaContent(rawSchemaContent);
+    
+    // Convert SchemaEntry[] back to Record<string, string> for validation
+    const schemaVars = Object.fromEntries(schemaEntries.map(entry => [entry.key, entry.rule]));
 
     const result = validate(envVars, schemaVars, rawEnvContent);
 

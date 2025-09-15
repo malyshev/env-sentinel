@@ -13,7 +13,7 @@ describe('minValueValidator', () => {
         expect(minValueValidator('PORT', '3000', ['abc'])).toBe('Invalid min argument for PORT');
     });
 
-    it('should return error message for invalid number value', () => {
-        expect(minValueValidator('PORT', 'abc', ['1000'])).toBe('Invalid number for PORT');
+    it('should validate string length for non-numeric values', () => {
+        expect(minValueValidator('PORT', 'abc', ['1000'])).toBe('PORT must be at least 1000 characters long');
     });
 });

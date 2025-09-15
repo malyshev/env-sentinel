@@ -38,6 +38,7 @@ lerna-debug.log*
 
 # dotenv environment variable files
 .env*
+!.env-sentinel-example
 
 # temp directory
 .temp
