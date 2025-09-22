@@ -14,7 +14,7 @@ export function noLeadingSpacesCheck(lineNumber: number, lineContent: string): L
             line: lineNumber,
             issue: `Variable name has leading spaces: "${rawKey}"`,
             content: lineContent,
-            severity: 'warning',
+            severity: 'error',
         };
     }
     return;

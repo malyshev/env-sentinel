@@ -13,7 +13,7 @@ describe('noLeadingSpacesCheck', () => {
             line: 2,
             issue: 'Variable name has leading spaces: " VAR"',
             content: ' VAR=value',
-            severity: 'warning',
+            severity: 'error',
         };
         expect(result).toEqual(expected);
     });
@@ -34,7 +34,7 @@ describe('noLeadingSpacesCheck', () => {
             line: 5,
             issue: 'Variable name has leading spaces: "    VAR"',
             content: '    VAR=value',
-            severity: 'warning',
+            severity: 'error',
         };
         expect(result).toEqual(expected);
     });
