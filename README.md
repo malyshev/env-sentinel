@@ -2,6 +2,7 @@
 <p align="center"><img src="https://raw.githubusercontent.com/malyshev/env-sentinel/refs/heads/develop/assets/env-sentinel-logo.png" width="400" alt="env-sentinel logo"></p>
 
 <p align="center">
+<a href="https://envsentinel.dev"><img src="https://img.shields.io/website?down_color=red&down_message=offline&style=flat&url=https%3A%2F%2Fenvsentinel.dev" alt="Website Status"></a>
 <a href="https://github.com/malyshev/env-sentinel/actions"><img src="https://github.com/malyshev/env-sentinel/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://codecov.io/gh/malyshev/env-sentinel"><img src="https://img.shields.io/codecov/c/github/malyshev/env-sentinel" alt="Coverage Status"></a>
 <a href="https://www.npmjs.com/package/env-sentinel"><img src="https://img.shields.io/npm/dw/env-sentinel" alt="Total Downloads"></a>
@@ -16,6 +17,8 @@
 In addition to verifying variable types and required keys, **env-sentinel** can detect subtle and hard-to-spot issues such as malformed keys, unsafe characters, unescaped shell tokens, duplicate references, invalid syntax, and YAML pitfalls — problems that typical schema validation can't catch.
 
 With fast execution and a human-readable schema format, **env-sentinel** eliminates the guesswork of `.env.example` files and bloated config validators — giving you clear, actionable feedback without writing custom validation logic.
+
+[Visit the official website](https://envsentinel.dev) for documentation, quickstart guides, and tutorials.
 
 ### ✨ Key Features
 
