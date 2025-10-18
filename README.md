@@ -18,7 +18,20 @@ In addition to verifying variable types and required keys, **env-sentinel** can 
 
 With fast execution and a human-readable schema format, **env-sentinel** eliminates the guesswork of `.env.example` files and bloated config validators — giving you clear, actionable feedback without writing custom validation logic.
 
-[Visit the official website](https://envsentinel.dev) for documentation, quickstart guides, and tutorials.
+---
+
+## 📚 Documentation
+
+**[📖 Read the full documentation at envsentinel.dev/docs →](https://envsentinel.dev/docs)**
+
+Find detailed guides, examples, and API references on our official documentation site:
+- **Quickstart Guide** - Get started in minutes
+- **Linting** - Catch unused and inconsistent variables
+- **Validation** - Validate against schema to prevent misconfigurations
+- **Documenting** - Generate clear documentation for your team
+- **API Reference** - Integration guides for programmatic use
+
+---
 
 ### ✨ Key Features
 
