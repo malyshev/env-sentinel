@@ -3,15 +3,20 @@ export type nil = undefined | unknown | null;
 export type SchemaEntry = {
     key: string;
     rule: string;
-    metadata?: DocumentationMetadata;
 };
 
-export type DocumentationMetadata = {
+export type DocsSection = {
+    name: string;
+    description?: string;
+    variables: DocsVariable[];
+};
+
+export type DocsVariable = {
+    key: string;
     description?: string;
     example?: string;
+    rules: ParsedRule[];
     default?: string;
-    section?: string;
-    sectionDescription?: string;
 };
 
 export type ParsedRule = {
@@ -19,7 +24,7 @@ export type ParsedRule = {
     args: string[];
 };
 
-export type CommandName = 'init' | 'validate' | 'check' | 'lint' | undefined;
+export type CommandName = 'init' | 'validate' | 'check' | 'lint' | 'docs' | undefined;
 
 export type ValidationResult = string | true;
 
@@ -32,7 +37,13 @@ export type LintCheckFn = (lineNumber: number, lineContent: string) => LintResul
 
 export type LintCheck = { name: string; run: LintCheckFn; skipOnEmptyOrComment?: boolean };
 
-export type ExpectedArguments = { command?: CommandName; file?: string; schema?: string; force?: boolean };
+export type ExpectedArguments = { 
+    command?: CommandName; 
+    file?: string; 
+    schema?: string; 
+    force?: boolean;
+    output?: string;
+};
 
 // Unified result types for library integration
 export type Result = {

@@ -1,4 +1,4 @@
-import { REFERENCE_REGEX, getReferencedKey } from '../utils/reference-utils.js';
+import { REFERENCE_REGEX, getReferencedKey } from '../utils/index.js';
 
 export function parseEnvContent(rawEnvContent: string): Record<string, string> {
     const env: Record<string, string> = {};

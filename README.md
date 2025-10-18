@@ -37,13 +37,14 @@ Find detailed guides, examples, and API references on our official documentation
 
 - ✅ Lint .env files to catch formatting issues, unsafe syntax, and common misconfigurations
 - ✅ Validate environment variables against a defined schema
+- ✅ Generate markdown documentation from annotated schemas
 - ✅ Simple schema format (e.g. VAR_NAME=required|number)
 - ✅ Smart type detection when generating from .env
 - ✅ Auto-generate schema with type inference from existing .env files
 - ✅ Zero dependencies and extremely fast
 - ✅ Ideal for local development, CI/CD, and team workflows
 - ✅ Fast fail with clear, colorized output
-- ✅ **NEW**: Available as both CLI tool and integrable library
+- ✅ Available as both CLI tool and integrable library
 
 ## 📦 Installation
 
@@ -120,6 +121,16 @@ npx env-sentinel validate
 npx env-sentinel validate --file .env.production --schema config/prod.schema
 ```
 
+### 4. Generate documentation
+
+```bash
+# Generate documentation from schema
+npx env-sentinel docs
+
+# Specify custom files
+npx env-sentinel docs --schema .env-sentinel-example --output CONFIG.md
+```
+
 ## 📋 CLI Commands
 
 ### `lint` - Check for formatting issues
@@ -170,31 +181,151 @@ npx env-sentinel init [--file <env-file>] [--force]
 - Infers required/optional based on usage
 - Skips invalid entries and reports them
 
-## 📝 Schema Format (.env-sentinel)
+### `docs` - Generate documentation from schema
 
-Each line represents a variable and its validation rules:
-
-```dotenv
-DB_HOST=required
-DB_PORT=required|number
-DEBUG=optional|boolean
-NODE_ENV=optional|enum:development,production,test
-API_KEY=required|min:32
-MAX_CONNECTIONS=optional|number|max:100
+```bash
+npx env-sentinel docs [--schema <schema-file>] [--output <output-file>]
 ```
 
-## Supported Validation Rules
+**Options:**
+- `--schema <path>` - Schema file to document (default: `.env-sentinel`)
+- `--output <path>` - Output markdown file (default: `CONFIGURATION.md`)
 
-| Rule | Description | Example |
-|------|-------------|---------|
-| **required** | Must be defined | `DB_HOST=required` |
-| **optional** | Can be missed | `DEBUG=optional` |
-| **number** | Must be a number | `PORT=required\|number` |
-| **boolean** | Must be `true` or `false` | `DEBUG=optional\|boolean` |
-| **string** | Can be anything | `NAME=required\|string` |
-| **min:value** | Minimum value/length | `API_KEY=required\|min:32` |
-| **max:value** | Maximum value/length | `PORT=required\|number\|max:65535` |
-| **enum:values** | Must match one of listed values | `NODE_ENV=required\|enum:dev,prod,test` |
+**Features:**
+- Generates markdown documentation from annotated schema
+- Supports sections, descriptions, examples, and constraints
+- Creates a table of contents for easy navigation
+- Highlights sensitive variables (marked with `secure` validator)
+- See [example schema](.env-sentinel-example) and [generated output](EXAMPLE_GENERATED_DOCS.md)
+
+## 📝 Schema Format (.env-sentinel)
+
+The `.env-sentinel` file defines validation rules for your environment variables. Think of it as a contract that your `.env` file must follow.
+
+**Quick example:**
+
+```dotenv
+# Your .env file
+DB_HOST=localhost
+DB_PORT=5432
+API_KEY=my-secret-key-12345
+```
+
+```dotenv
+# Your .env-sentinel schema file
+DB_HOST=required
+DB_PORT=required|number|min:1|max:65535
+API_KEY=required|min:16
+```
+
+When you run `npx env-sentinel validate`, it checks that:
+- ✅ `DB_HOST` exists (it does: "localhost")
+- ✅ `DB_PORT` exists AND is a number between 1-65535 (it is: 5432)
+- ✅ `API_KEY` exists AND is at least 16 characters long (it is)
+
+---
+
+### Basic Schema
+
+Each line in `.env-sentinel` represents a variable and its validation rules. You can combine multiple rules using the pipe (`|`) character:
+
+```dotenv
+# Simple validation - just check if exists
+DB_HOST=required
+
+# Type validation - must be a number
+DB_PORT=required|number
+
+# With constraints - number between 1 and 65535
+DB_PORT=required|number|min:1|max:65535
+
+# Optional variables
+DEBUG=boolean
+NODE_ENV=enum:development,production,test
+
+# String validation - minimum length
+API_KEY=required|min:32
+
+# Complex example - all together
+DB_PASSWORD=required|secure|min:12|default:"changeme"
+```
+
+### Documented Schema
+
+Add documentation annotations using comment tags for markdown generation:
+
+```dotenv
+# @section Database
+# @description Database connection settings
+
+# @var Database server hostname
+# @example localhost
+DB_HOST=required
+
+# @var Database server port
+# @example 5432
+DB_PORT=required|number|min:1|max:65535
+
+# @var Database password (keep secure!)
+DB_PASS=required|secure|min:8
+```
+
+**Available tags:**
+- `# @section <name>` - Group variables into sections
+- `# @description <text>` - Add description for section (supports multi-line)
+- `# @var <description>` - Document a variable (supports multi-line)
+- `# @example <value>` - Provide example value
+
+**Documentation features:**
+- Multi-line descriptions are supported
+- Variables with `secure` validator are automatically highlighted with 🔒
+- Default values from `default:"value"` are shown in documentation
+- Type and constraints (min/max/enum) are automatically extracted
+- Table of contents is generated for sections
+
+See [.env-sentinel-example](.env-sentinel-example) for a full example.
+
+### Supported Validation Rules
+
+Use these rules in your `.env-sentinel` schema file to validate environment variables. Multiple rules can be combined using the pipe (`|`) separator.
+
+| Rule | What it does | Usage Example | Common use cases |
+|------|--------------|---------------|------------------|
+| `required` | Variable must exist and have a value | `DB_HOST=required` | Critical variables like database connections, API endpoints |
+| `number` | Value must be a valid number (integer or decimal) | `PORT=required\|number` | Ports, IDs, timeouts, counts, rate limits |
+| `boolean` | Value must be exactly `true` or `false` | `DEBUG=boolean` | Feature flags, toggle switches, enable/disable settings |
+| `string` | Explicitly marks variable as text (optional, default type) | `APP_NAME=string` | Documentation purposes, explicit type declaration |
+| `min:value` | For numbers: minimum value<br>For strings: minimum length | `PORT=number\|min:1`<br>`API_KEY=min:32` | Valid port ranges, minimum key/password length |
+| `max:value` | For numbers: maximum value<br>For strings: maximum length | `PORT=number\|max:65535`<br>`USERNAME=max:50` | Port limits, username/input length restrictions |
+| `enum:val1,val2` | Value must be one of the listed options | `NODE_ENV=enum:dev,staging,prod` | Environment modes, log levels, deployment targets |
+| `secure` | Enforces strong passwords (uppercase + lowercase + special chars) | `DB_PASS=required\|secure\|min:8` | Passwords, API keys, sensitive credentials |
+| `default:"value"` | Specifies default value (shown in docs, not used in validation) | `PORT=number\|default:"3000"` | Documenting fallback values, optional configuration |
+
+**How rules work together:**
+
+```dotenv
+# Single rule - just check if it exists
+DB_HOST=required
+
+# Multiple rules - must be required AND a number
+DB_PORT=required|number
+
+# Complex validation - required, must be a number, and between 1-65535
+DB_PORT=required|number|min:1|max:65535
+
+# With metadata - required, secure password, min 8 chars, with default shown in docs
+DB_PASS=required|secure|min:8|default:"ChangeMe123!"
+
+# Enum - must be one of these exact values
+NODE_ENV=required|enum:development,staging,production
+```
+
+**Important notes:**
+- `required` means the variable **must exist** in your `.env` file
+- If you don't specify `required`, the variable is **optional**
+- `min` and `max` are smart: they check **numeric value** for numbers, **character length** for strings
+- `secure` validator checks for: uppercase letter + lowercase letter + number + special character
+- `default` is for documentation only - it doesn't set actual values in your app
 
 ## 📊 Sample Output
 

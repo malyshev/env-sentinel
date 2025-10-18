@@ -1,17 +1,18 @@
 import process from 'node:process';
-import { handleInit, handleValidate } from './handlers/index.js';
+import { handleInit, handleValidate, handleDocs } from './handlers/index.js';
 import { parseArguments } from './parsers/parse-arguments.js';
-import { DEFAULT_SCHEMA_FILE_NAME } from './constants.js';
+import { DEFAULT_SCHEMA_FILE_NAME, DEFAULT_DOCS_FILE_NAME } from './constants.js';
 import { ExpectedArguments } from './types.js';
 import { handleLint } from './handlers/handle-lint.js';
 import { log } from './utils/log.js';
 
 export function run(): void {
-    const { command, file, schema, force } = parseArguments<ExpectedArguments>(process.argv, {
+    const { command, file, schema, force, output } = parseArguments<ExpectedArguments>(process.argv, {
         command: 'validate',
         file: '.env',
         schema: DEFAULT_SCHEMA_FILE_NAME,
         force: false,
+        output: DEFAULT_DOCS_FILE_NAME,
     });
 
     try {
@@ -36,9 +37,13 @@ export function run(): void {
                 handleLint(file!);
                 process.exit(0);
                 break;
+            case 'docs':
+                handleDocs(schema!, output!);
+                process.exit(0);
+                break;
             default:
                 console.log(`Unknown command: ${command}`);
-                console.log(`Usage: env-sentinel [init|check] [--force] [--file FILE] [--schema FILE]`);
+                console.log(`Usage: env-sentinel [init|validate|lint|docs] [--file FILE] [--schema FILE] [--output FILE]`);
                 process.exit(1);
         }
     } catch (error) {
