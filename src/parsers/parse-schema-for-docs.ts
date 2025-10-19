@@ -146,6 +146,15 @@ function parseSection(lines: string[], startIndex: number): { section: DocsSecti
                 i = nextIndex;
                 continue;
             }
+            
+            i++;
+            continue;
+        }
+        
+        const equalIndex = line.indexOf('=');
+        if (equalIndex !== -1) {
+            const variable = parseVariableWithoutDocs(line, i);
+            section.variables.push(variable);
         }
         
         i++;

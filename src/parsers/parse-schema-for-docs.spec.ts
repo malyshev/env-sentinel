@@ -258,5 +258,41 @@ describe('parseSchemaForDocs', () => {
         expect(result[0].description).toBe('Database settings');
         expect(result[0].variables[0].description).toBe('Database host');
     });
+
+    it('should include undocumented variables within sections', () => {
+        const schema = [
+            '# @section Email',
+            '# @description Email configuration',
+            '',
+            '# @var Email delivery method',
+            'MAIL_MAILER=required|enum:smtp,sendmail',
+            'MAIL_HOST=required',
+            'MAIL_PORT=required|number',
+            '# @var SMTP encryption',
+            'MAIL_ENCRYPTION=enum:tls,ssl',
+            'MAIL_FROM=required'
+        ].join('\n');
+
+        const result = parseSchemaForDocs(schema);
+
+        expect(result).toHaveLength(1);
+        expect(result[0].name).toBe('Email');
+        expect(result[0].variables).toHaveLength(5);
+        
+        expect(result[0].variables[0].key).toBe('MAIL_MAILER');
+        expect(result[0].variables[0].description).toBe('Email delivery method');
+        
+        expect(result[0].variables[1].key).toBe('MAIL_HOST');
+        expect(result[0].variables[1].description).toBeUndefined();
+        
+        expect(result[0].variables[2].key).toBe('MAIL_PORT');
+        expect(result[0].variables[2].description).toBeUndefined();
+        
+        expect(result[0].variables[3].key).toBe('MAIL_ENCRYPTION');
+        expect(result[0].variables[3].description).toBe('SMTP encryption');
+        
+        expect(result[0].variables[4].key).toBe('MAIL_FROM');
+        expect(result[0].variables[4].description).toBeUndefined();
+    });
 });
 
